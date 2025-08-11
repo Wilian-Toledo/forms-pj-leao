@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ficha Cadastral PJ</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Ficha Cadastral — Pessoa Jurídica</h1>
+    <form id="form" action="/submit" method="post" enctype="multipart/form-data">
+
+      <section>
+        <h2>Executivo / Empresa</h2>
+        <label>Nome do Executivo* <input name="nomeExecutivo" required></label>
+        <label>Razão Social* <input name="razaoSocial" required></label>
+        <label>CNPJ* <input name="cnpj" id="cnpj" required inputmode="numeric" maxlength="18"></label>
+        <label>Inscrição Estadual <input name="inscricaoEstadual"></label>
+        <label>E-mail* <input type="email" name="emailPrincipal" required></label>
+        <label>Telefone* <input name="telefonePrincipal" id="telefonePrincipal" required inputmode="tel" maxlength="15"></label>
+      </section>
+
+      <section>
+        <h2>Endereço Principal</h2>
+        <div class="row">
+          <label>CEP* <input name="cepPrincipal" id="cepPrincipal" required inputmode="numeric" maxlength="9"></label>
+          <button type="button" class="btn" id="btnCepPrincipal">Buscar CEP</button>
+        </div>
+        <label>Logradouro* <input name="logradouroPrincipal" id="logradouroPrincipal" required></label>
+        <label>Número* <input name="numeroPrincipal" id="numeroPrincipal" required></label>
+        <label>Complemento <input name="complementoPrincipal" id="complementoPrincipal"></label>
+        <label>Bairro* <input name="bairroPrincipal" id="bairroPrincipal" required></label>
+        <div class="row">
+          <label>Cidade* <input name="cidadePrincipal" id="cidadePrincipal" required></label>
+          <label>UF* <input name="ufPrincipal" id="ufPrincipal" required maxlength="2"></label>
+        </div>
+
+        <div class="row">
+          <label>Endereço de entrega é o mesmo?*
+            <select name="entregaIgual" id="entregaIgual" required>
+              <option value="sim">Sim</option>
+              <option value="nao">Não</option>
+            </select>
+          </label>
+          <label>Endereço de cobrança é o mesmo?*
+            <select name="cobrancaIgual" id="cobrancaIgual" required>
+              <option value="sim">Sim</option>
+              <option value="nao">Não</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section id="secEntrega" class="hidden">
+        <h2>Endereço de Entrega</h2>
+        <div class="row">
+          <label>CEP* <input name="cepEntrega" id="cepEntrega" inputmode="numeric" maxlength="9"></label>
+          <button type="button" class="btn" id="btnCepEntrega">Buscar CEP</button>
+        </div>
+        <label>Logradouro* <input name="logradouroEntrega" id="logradouroEntrega"></label>
+        <label>Número* <input name="numeroEntrega" id="numeroEntrega"></label>
+        <label>Complemento <input name="complementoEntrega" id="complementoEntrega"></label>
+        <label>Bairro* <input name="bairroEntrega" id="bairroEntrega"></label>
+        <div class="row">
+          <label>Cidade* <input name="cidadeEntrega" id="cidadeEntrega"></label>
+          <label>UF* <input name="ufEntrega" id="ufEntrega" maxlength="2"></label>
+        </div>
+      </section>
+
+      <section id="secCobranca" class="hidden">
+        <h2>Endereço de Cobrança</h2>
+        <div class="row">
+          <label>CEP* <input name="cepCobranca" id="cepCobranca" inputmode="numeric" maxlength="9"></label>
+          <button type="button" class="btn" id="btnCepCobranca">Buscar CEP</button>
+        </div>
+        <label>Logradouro* <input name="logradouroCobranca" id="logradouroCobranca"></label>
+        <label>Número* <input name="numeroCobranca" id="numeroCobranca"></label>
+        <label>Complemento <input name="complementoCobranca" id="complementoCobranca"></label>
+        <label>Bairro* <input name="bairroCobranca" id="bairroCobranca"></label>
+        <div class="row">
+          <label>Cidade* <input name="cidadeCobranca" id="cidadeCobranca"></label>
+          <label>UF* <input name="ufCobranca" id="ufCobranca" maxlength="2"></label>
+        </div>
+      </section>
+
+      <section>
+        <h2>Financeiro</h2>
+        <label>Contato Financeiro (Nome)* <input name="nomeFinanceiro" required></label>
+        <label>E-mail Financeiro* <input type="email" name="emailFinanceiro" required></label>
+        <label>Telefone Financeiro* <input name="telefoneFinanceiro" id="telefoneFinanceiro" required inputmode="tel" maxlength="15"></label>
+      </section>
+
+      <section>
+        <h2>Dados Bancários</h2>
+        <label>Banco* 
+          <select name="nomeBanco" id="nomeBanco" required>
+            <option value="">Carregando bancos...</option>
+          </select>
+        </label>
+        <label>Agência* <input name="agencia" required></label>
+        <label>Conta* <input name="conta" required></label>
+        <label>Tipo de Conta* 
+          <select name="tipoConta" required>
+            <option>Corrente</option>
+            <option>Poupança</option>
+            <option>Pagamento</option>
+            <option>Outra</option>
+          </select>
+        </label>
+        <label>PIX (opcional) <input name="chavePix"></label>
+      </section>
+
+      <section>
+        <h2>Anexos (opcional)</h2>
+        <input type="file" name="anexos" multiple />
+        <small>Até 5 arquivos • Máx. <span id="maxMb">10</span> MB por arquivo</small>
+      </section>
+
+      <div class="actions">
+        <button type="submit" class="btn">Enviar</button>
+        <span id="status"></span>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    window.MAX_FILE_MB = ${process.env.MAX_FILE_MB || 10};
+  </script>
+  <script src="/script.js"></script>
+</body>
+</html>
