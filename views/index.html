@@ -1,132 +1,156 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ficha Cadastral PJ</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário - Leão</title>
+  <link rel="stylesheet" href="/public/styles.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Ficha Cadastral — Pessoa Jurídica</h1>
-    <form id="form" action="/submit" method="post" enctype="multipart/form-data">
+  <header class="header">
+    <img src="/public/logo-leao.png" alt="Logo Leão" class="logo">
+    <h1>Cadastro Pessoa Jurídica</h1>
+  </header>
 
-      <section>
-        <h2>Executivo / Empresa</h2>
-        <label>Nome do Executivo* <input name="nomeExecutivo" required></label>
-        <label>Razão Social* <input name="razaoSocial" required></label>
-        <label>CNPJ* <input name="cnpj" id="cnpj" required inputmode="numeric" maxlength="18"></label>
-        <label>Inscrição Estadual <input name="inscricaoEstadual"></label>
-        <label>E-mail* <input type="email" name="emailPrincipal" required></label>
-        <label>Telefone* <input name="telefonePrincipal" id="telefonePrincipal" required inputmode="tel" maxlength="15"></label>
-      </section>
+  <form id="formPJ" action="/enviar" method="POST" enctype="multipart/form-data">
+    <!-- Dados da Empresa -->
+    <section>
+      <h2>Dados da Empresa</h2>
+      <label>CNPJ*<input type="text" name="cnpj" required></label>
+      <label>Razão Social*<input type="text" name="razao_social" required></label>
+      <label>Telefone*<input type="text" name="telefone" required></label>
+      <label>Email*<input type="email" name="email" required></label>
+    </section>
 
-      <section>
-        <h2>Endereço Principal</h2>
-        <div class="row">
-          <label>CEP* <input name="cepPrincipal" id="cepPrincipal" required inputmode="numeric" maxlength="9"></label>
-          <button type="button" class="btn" id="btnCepPrincipal">Buscar CEP</button>
-        </div>
-        <label>Logradouro* <input name="logradouroPrincipal" id="logradouroPrincipal" required></label>
-        <label>Número* <input name="numeroPrincipal" id="numeroPrincipal" required></label>
-        <label>Complemento <input name="complementoPrincipal" id="complementoPrincipal"></label>
-        <label>Bairro* <input name="bairroPrincipal" id="bairroPrincipal" required></label>
-        <div class="row">
-          <label>Cidade* <input name="cidadePrincipal" id="cidadePrincipal" required></label>
-          <label>UF* <input name="ufPrincipal" id="ufPrincipal" required maxlength="2"></label>
-        </div>
+    <!-- Endereço Principal -->
+    <section>
+      <h2>Endereço Principal</h2>
+      <label>CEP*<input type="text" name="cep" id="cep" required></label>
+      <label>Rua*<input type="text" name="rua" id="rua" required></label>
+      <label>Número*<input type="text" name="numero" required></label>
+      <label>Bairro*<input type="text" name="bairro" id="bairro" required></label>
+      <label>Cidade*<input type="text" name="cidade" id="cidade" required></label>
+      <label>Estado*<input type="text" name="estado" id="estado" required></label>
+    </section>
 
-        <div class="row">
-          <label>Endereço de entrega é o mesmo?*
-            <select name="entregaIgual" id="entregaIgual" required>
-              <option value="sim">Sim</option>
-              <option value="nao">Não</option>
-            </select>
-          </label>
-          <label>Endereço de cobrança é o mesmo?*
-            <select name="cobrancaIgual" id="cobrancaIgual" required>
-              <option value="sim">Sim</option>
-              <option value="nao">Não</option>
-            </select>
-          </label>
-        </div>
-      </section>
-
-      <section id="secEntrega" class="hidden">
+    <!-- Perguntas Condicionais -->
+    <section>
+      <label>O endereço de entrega é o mesmo do principal?*
+        <select id="enderecoEntregaIgual" name="entrega_igual" required>
+          <option value="">Selecione</option>
+          <option value="sim">Sim</option>
+          <option value="nao">Não</option>
+        </select>
+      </label>
+      <div id="secaoEntrega" class="condicional">
         <h2>Endereço de Entrega</h2>
-        <div class="row">
-          <label>CEP* <input name="cepEntrega" id="cepEntrega" inputmode="numeric" maxlength="9"></label>
-          <button type="button" class="btn" id="btnCepEntrega">Buscar CEP</button>
-        </div>
-        <label>Logradouro* <input name="logradouroEntrega" id="logradouroEntrega"></label>
-        <label>Número* <input name="numeroEntrega" id="numeroEntrega"></label>
-        <label>Complemento <input name="complementoEntrega" id="complementoEntrega"></label>
-        <label>Bairro* <input name="bairroEntrega" id="bairroEntrega"></label>
-        <div class="row">
-          <label>Cidade* <input name="cidadeEntrega" id="cidadeEntrega"></label>
-          <label>UF* <input name="ufEntrega" id="ufEntrega" maxlength="2"></label>
-        </div>
-      </section>
-
-      <section id="secCobranca" class="hidden">
-        <h2>Endereço de Cobrança</h2>
-        <div class="row">
-          <label>CEP* <input name="cepCobranca" id="cepCobranca" inputmode="numeric" maxlength="9"></label>
-          <button type="button" class="btn" id="btnCepCobranca">Buscar CEP</button>
-        </div>
-        <label>Logradouro* <input name="logradouroCobranca" id="logradouroCobranca"></label>
-        <label>Número* <input name="numeroCobranca" id="numeroCobranca"></label>
-        <label>Complemento <input name="complementoCobranca" id="complementoCobranca"></label>
-        <label>Bairro* <input name="bairroCobranca" id="bairroCobranca"></label>
-        <div class="row">
-          <label>Cidade* <input name="cidadeCobranca" id="cidadeCobranca"></label>
-          <label>UF* <input name="ufCobranca" id="ufCobranca" maxlength="2"></label>
-        </div>
-      </section>
-
-      <section>
-        <h2>Financeiro</h2>
-        <label>Contato Financeiro (Nome)* <input name="nomeFinanceiro" required></label>
-        <label>E-mail Financeiro* <input type="email" name="emailFinanceiro" required></label>
-        <label>Telefone Financeiro* <input name="telefoneFinanceiro" id="telefoneFinanceiro" required inputmode="tel" maxlength="15"></label>
-      </section>
-
-      <section>
-        <h2>Dados Bancários</h2>
-        <label>Banco* 
-          <select name="nomeBanco" id="nomeBanco" required>
-            <option value="">Carregando bancos...</option>
-          </select>
-        </label>
-        <label>Agência* <input name="agencia" required></label>
-        <label>Conta* <input name="conta" required></label>
-        <label>Tipo de Conta* 
-          <select name="tipoConta" required>
-            <option>Corrente</option>
-            <option>Poupança</option>
-            <option>Pagamento</option>
-            <option>Outra</option>
-          </select>
-        </label>
-        <label>PIX (opcional) <input name="chavePix"></label>
-      </section>
-
-      <section>
-        <h2>Anexos (opcional)</h2>
-        <input type="file" name="anexos" multiple />
-        <small>Até 5 arquivos • Máx. <span id="maxMb">10</span> MB por arquivo</small>
-      </section>
-
-      <div class="actions">
-        <button type="submit" class="btn">Enviar</button>
-        <span id="status"></span>
+        <label>CEP<input type="text" name="cep_entrega"></label>
+        <label>Rua<input type="text" name="rua_entrega"></label>
+        <label>Número<input type="text" name="numero_entrega"></label>
+        <label>Bairro<input type="text" name="bairro_entrega"></label>
+        <label>Cidade<input type="text" name="cidade_entrega"></label>
+        <label>Estado<input type="text" name="estado_entrega"></label>
       </div>
-    </form>
-  </div>
+
+      <label>O endereço de cobrança é o mesmo do principal?*
+        <select id="enderecoCobrancaIgual" name="cobranca_igual" required>
+          <option value="">Selecione</option>
+          <option value="sim">Sim</option>
+          <option value="nao">Não</option>
+        </select>
+      </label>
+      <div id="secaoCobranca" class="condicional">
+        <h2>Endereço de Cobrança</h2>
+        <label>CEP<input type="text" name="cep_cobranca"></label>
+        <label>Rua<input type="text" name="rua_cobranca"></label>
+        <label>Número<input type="text" name="numero_cobranca"></label>
+        <label>Bairro<input type="text" name="bairro_cobranca"></label>
+        <label>Cidade<input type="text" name="cidade_cobranca"></label>
+        <label>Estado<input type="text" name="estado_cobranca"></label>
+      </div>
+    </section>
+
+    <!-- Dados Bancários -->
+    <section>
+      <h2>Dados Bancários</h2>
+      <label>Banco<select name="banco" id="bancoSelect"></select></label>
+      <label>Agência<input type="text" name="agencia"></label>
+      <label>Conta<input type="text" name="conta"></label>
+    </section>
+
+    <!-- Uploads -->
+    <section>
+      <h2>Documentos</h2>
+      <label>Contrato Social<input type="file" name="contrato_social"></label>
+      <label>Comprovante de Endereço<input type="file" name="comprovante_endereco"></label>
+    </section>
+
+    <button type="submit">Enviar</button>
+  </form>
 
   <script>
-    window.MAX_FILE_MB = ${process.env.MAX_FILE_MB || 10};
+    // Máscaras
+    function mascaraCNPJ(v) {
+      v = v.replace(/\D/g, "");
+      v = v.replace(/^(\d{2})(\d)/, "$1.$2");
+      v = v.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
+      v = v.replace(/\.(\d{3})(\d)/, ".$1/$2");
+      v = v.replace(/(\d{4})(\d)/, "$1-$2");
+      return v;
+    }
+    function mascaraTelefone(v) {
+      v = v.replace(/\D/g, "");
+      v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
+      v = v.replace(/(\d{4,5})(\d{4})$/, "$1-$2");
+      return v;
+    }
+    function mascaraCEP(v) {
+      v = v.replace(/\D/g, "");
+      v = v.replace(/^(\d{5})(\d)/, "$1-$2");
+      return v;
+    }
+
+    document.querySelector('input[name="cnpj"]').addEventListener('input', e => e.target.value = mascaraCNPJ(e.target.value));
+    document.querySelector('input[name="telefone"]').addEventListener('input', e => e.target.value = mascaraTelefone(e.target.value));
+    document.getElementById('cep').addEventListener('input', e => e.target.value = mascaraCEP(e.target.value));
+
+    // ViaCEP
+    document.getElementById('cep').addEventListener('blur', function() {
+      let cep = this.value.replace(/\D/g, '');
+      if (cep.length === 8) {
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+          .then(res => res.json())
+          .then(data => {
+            if (!data.erro) {
+              document.getElementById('rua').value = data.logradouro;
+              document.getElementById('bairro').value = data.bairro;
+              document.getElementById('cidade').value = data.localidade;
+              document.getElementById('estado').value = data.uf;
+            }
+          });
+      }
+    });
+
+    // Condicionais
+    document.getElementById('enderecoEntregaIgual').addEventListener('change', function() {
+      document.getElementById('secaoEntrega').style.display = this.value === 'nao' ? 'block' : 'none';
+    });
+    document.getElementById('enderecoCobrancaIgual').addEventListener('change', function() {
+      document.getElementById('secaoCobranca').style.display = this.value === 'nao' ? 'block' : 'none';
+    });
+
+    // Lista de Bancos
+    fetch("https://brasilapi.com.br/api/banks/v1")
+      .then(res => res.json())
+      .then(bancos => {
+        let select = document.getElementById('bancoSelect');
+        bancos.forEach(b => {
+          let opt = document.createElement('option');
+          opt.value = b.code;
+          opt.textContent = `${b.code} - ${b.fullName}`;
+          select.appendChild(opt);
+        });
+      });
   </script>
-  <script src="/script.js"></script>
 </body>
 </html>
