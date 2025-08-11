@@ -1,156 +1,371 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulário - Leão</title>
-  <link rel="stylesheet" href="/public/styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ficha Cadastral - Pessoa Jurídica | Leão</title>
+  <link rel="stylesheet" href="/public/styles.css" />
 </head>
 <body>
-  <header class="header">
-    <img src="/public/logo-leao.png" alt="Logo Leão" class="logo">
-    <h1>Cadastro Pessoa Jurídica</h1>
-  </header>
+  <div class="page">
+    <header class="hero">
+      <img class="hero-logo" src="/public/leao-logo.jpg" alt="Leão Alimentos e Bebidas" />
+      <h1>Ficha Cadastral - Pessoa Jurídica</h1>
+      <p>Preencha todos os campos obrigatórios (*) para completar seu cadastro</p>
+    </header>
 
-  <form id="formPJ" action="/enviar" method="POST" enctype="multipart/form-data">
-    <!-- Dados da Empresa -->
-    <section>
-      <h2>Dados da Empresa</h2>
-      <label>CNPJ*<input type="text" name="cnpj" required></label>
-      <label>Razão Social*<input type="text" name="razao_social" required></label>
-      <label>Telefone*<input type="text" name="telefone" required></label>
-      <label>Email*<input type="email" name="email" required></label>
-    </section>
+    <main class="card">
 
-    <!-- Endereço Principal -->
-    <section>
-      <h2>Endereço Principal</h2>
-      <label>CEP*<input type="text" name="cep" id="cep" required></label>
-      <label>Rua*<input type="text" name="rua" id="rua" required></label>
-      <label>Número*<input type="text" name="numero" required></label>
-      <label>Bairro*<input type="text" name="bairro" id="bairro" required></label>
-      <label>Cidade*<input type="text" name="cidade" id="cidade" required></label>
-      <label>Estado*<input type="text" name="estado" id="estado" required></label>
-    </section>
+      <form id="form" action="/submit" method="post" enctype="multipart/form-data" novalidate>
+        <!-- 👤 Informações do Executivo -->
+        <section class="section">
+          <h2>👤 Informações do Executivo</h2>
+          <p class="section-sub">Dados do executivo responsável pelo cadastro</p>
+          <div class="grid g3">
+            <label>Nome do Executivo *<input name="nomeExecutivo" required></label>
+            <label>Nome do Coordenador *<input name="nomeCoordenador" required></label>
+            <label>Nome do Gerente *<input name="nomeGerente" required></label>
+          </div>
+        </section>
 
-    <!-- Perguntas Condicionais -->
-    <section>
-      <label>O endereço de entrega é o mesmo do principal?*
-        <select id="enderecoEntregaIgual" name="entrega_igual" required>
-          <option value="">Selecione</option>
-          <option value="sim">Sim</option>
-          <option value="nao">Não</option>
-        </select>
-      </label>
-      <div id="secaoEntrega" class="condicional">
-        <h2>Endereço de Entrega</h2>
-        <label>CEP<input type="text" name="cep_entrega"></label>
-        <label>Rua<input type="text" name="rua_entrega"></label>
-        <label>Número<input type="text" name="numero_entrega"></label>
-        <label>Bairro<input type="text" name="bairro_entrega"></label>
-        <label>Cidade<input type="text" name="cidade_entrega"></label>
-        <label>Estado<input type="text" name="estado_entrega"></label>
+        <!-- 📋 Dados da Empresa -->
+        <section class="section">
+          <h2>📋 Dados da Empresa</h2>
+          <p class="section-sub">Informações básicas da empresa</p>
+          <div class="grid g3">
+            <label>Razão Social *<input name="razaoSocial" required></label>
+            <label>Nome Fantasia *<input name="nomeFantasia" required></label>
+            <label>CNPJ *<input id="cnpj" name="cnpj" inputmode="numeric" maxlength="18" placeholder="00.000.000/0000-00" required></label>
+            <label>Inscrição Estadual *<input name="inscricaoEstadual" placeholder="Digite ISENTO se não possuir" required></label>
+            <label>Inscrição Municipal *<input name="inscricaoMunicipal" placeholder="Digite ISENTO se não possuir" required></label>
+          </div>
+        </section>
+
+        <!-- 📞 Contatos -->
+        <section class="section">
+          <h2>📞 Contatos</h2>
+          <p class="section-sub">Informações de contato da empresa</p>
+
+          <h3 class="legend">Responsável Principal</h3>
+          <div class="grid g3">
+            <label>Nome do Responsável Principal *<input name="nomeResponsavel" required></label>
+            <label>Telefone Principal *<input id="telPrincipal" name="telefone" placeholder="(11) 99999-9999" maxlength="15" required></label>
+            <label>E-mail Principal *<input type="email" name="email" required></label>
+          </div>
+
+          <h3 class="legend">Contato Comercial</h3>
+          <div class="grid g3">
+            <label>Nome do Contato Comercial *<input name="nomeContatoComercial" required></label>
+            <label>Telefone do Contato Comercial *<input id="telComercial" name="telefoneContatoComercial" placeholder="(11) 99999-9999" maxlength="15" required></label>
+            <label>E-mail do Contato Comercial *<input type="email" name="emailContatoComercial" required></label>
+          </div>
+
+          <h3 class="legend">Contato Financeiro</h3>
+          <div class="grid g3">
+            <label>Nome do Contato Financeiro *<input name="nomeContatoFinanceiro" required></label>
+            <label>Telefone do Contato Financeiro *<input id="telFinanceiro" name="telefoneContatoFinanceiro" placeholder="(11) 99999-9999" maxlength="15" required></label>
+            <label>E-mail do Contato Financeiro *<input type="email" name="emailContatoFinanceiro" required></label>
+          </div>
+        </section>
+
+        <!-- 🏠 Endereço Principal -->
+        <section class="section">
+          <h2>🏠 Endereço Principal</h2>
+          <p class="section-sub">Endereço principal da empresa</p>
+          <div class="grid g3">
+            <label>CEP *<input id="cepPrincipal" name="cepPrincipal" placeholder="00000-000" maxlength="9" inputmode="numeric" required></label>
+            <label>Número *<input name="numeroPrincipal" required></label>
+            <div></div>
+            <label>Rua *<input id="ruaPrincipal" name="logradouroPrincipal" required></label>
+            <label>Bairro *<input id="bairroPrincipal" name="bairroPrincipal" required></label>
+            <label>Cidade *<input id="cidadePrincipal" name="cidadePrincipal" required></label>
+            <label>Estado (UF) *<input id="ufPrincipal" name="ufPrincipal" maxlength="2" required></label>
+          </div>
+        </section>
+
+        <!-- ❓ Endereços Adicionais -->
+        <section class="section">
+          <h2>❓ Endereços Adicionais</h2>
+          <p class="section-sub">Confirme se os endereços de entrega e cobrança são os mesmos do endereço principal.</p>
+          <div class="grid g2">
+            <label>O endereço principal é o mesmo do endereço de entrega? *
+              <div class="row">
+                <label class="radio"><input type="radio" name="entregaIgual" value="sim" checked> Sim</label>
+                <label class="radio"><input type="radio" name="entregaIgual" value="nao"> Não</label>
+              </div>
+            </label>
+            <label>O endereço principal é o mesmo do endereço de cobrança? *
+              <div class="row">
+                <label class="radio"><input type="radio" name="cobrancaIgual" value="sim" checked> Sim</label>
+                <label class="radio"><input type="radio" name="cobrancaIgual" value="nao"> Não</label>
+              </div>
+            </label>
+          </div>
+        </section>
+
+        <!-- Entrega -->
+        <section id="secEntrega" class="section hidden">
+          <h3>🚚 Endereço de Entrega</h3>
+          <div class="grid g3">
+            <label>CEP *<input id="cepEntrega" name="cepEntrega" placeholder="00000-000" maxlength="9"></label>
+            <label>Número *<input name="numeroEntrega"></label>
+            <div></div>
+            <label>Rua *<input id="ruaEntrega" name="logradouroEntrega"></label>
+            <label>Bairro *<input id="bairroEntrega" name="bairroEntrega"></label>
+            <label>Cidade *<input id="cidadeEntrega" name="cidadeEntrega"></label>
+            <label>Estado (UF) *<input id="ufEntrega" name="ufEntrega" maxlength="2"></label>
+          </div>
+        </section>
+
+        <!-- Cobrança -->
+        <section id="secCobranca" class="section hidden">
+          <h3>📄 Endereço de Cobrança</h3>
+          <div class="grid g3">
+            <label>CEP *<input id="cepCobranca" name="cepCobranca" placeholder="00000-000" maxlength="9"></label>
+            <label>Número *<input name="numeroCobranca"></label>
+            <div></div>
+            <label>Rua *<input id="ruaCobranca" name="logradouroCobranca"></label>
+            <label>Bairro *<input id="bairroCobranca" name="bairroCobranca"></label>
+            <label>Cidade *<input id="cidadeCobranca" name="cidadeCobranca"></label>
+            <label>Estado (UF) *<input id="ufCobranca" name="ufCobranca" maxlength="2"></label>
+          </div>
+        </section>
+
+        <!-- 🏦 Dados Bancários -->
+        <section class="section">
+          <h2>🏦 Dados Bancários</h2>
+          <p class="section-sub">Informações bancárias da empresa</p>
+          <div class="grid g3">
+            <label>Banco * 
+              <select id="banco" name="nomeBanco" required>
+                <option value="">Carregando...</option>
+              </select>
+            </label>
+            <label>Agência *<input name="agencia" required></label>
+            <label>Conta *<input name="conta" required></label>
+            <label>Tipo de Conta * 
+              <select name="tipoConta" required>
+                <option value="">Selecione</option>
+                <option>Corrente</option>
+                <option>Poupança</option>
+                <option>Pagamento</option>
+                <option>Outra</option>
+              </select>
+            </label>
+          </div>
+        </section>
+
+        <!-- 💼 Dados Comerciais -->
+        <section class="section">
+          <h2>💼 Dados Comerciais</h2>
+          <p class="section-sub">Informações comerciais da empresa</p>
+          <div class="grid g2">
+            <label>Limite de Crédito Solicitado (R$) *<input type="number" name="limiteCredito" placeholder="Ex: 50000" required></label>
+            <label>Prazo Médio de Pagamento (dias) *<input type="number" name="prazoMedioPagamento" placeholder="Ex: 30" required></label>
+            <label>Faturamento Mensal Médio (R$) *<input type="number" name="faturamentoMensal" placeholder="Ex: 100000" required></label>
+            <label>Tempo de Atuação no Mercado (anos) *<input type="number" name="tempoMercado" placeholder="Ex: 5" required></label>
+          </div>
+
+          <div id="anexosObrigatorios" class="info hidden">
+            <strong>⚠️ Atenção:</strong> Para limites de crédito superiores a R$ 20.000,00, anexe:
+            <ul>
+              <li><strong>Balanço Patrimonial</strong> (último exercício)</li>
+              <li><strong>Faturamento dos últimos 12 meses</strong></li>
+            </ul>
+            <div class="grid g2">
+              <label>Balanço Patrimonial *<input type="file" name="doc_balanco" accept=".pdf,.doc,.docx"></label>
+              <label>Faturamento 12 meses *<input type="file" name="doc_faturamento" accept=".pdf,.doc,.docx"></label>
+            </div>
+          </div>
+        </section>
+
+        <!-- 🎯 Segmento de Vendas -->
+        <section class="section">
+          <h2>🎯 Segmento de Vendas</h2>
+          <p class="section-sub">Selecione os segmentos de vendas que sua empresa atende</p>
+          <div class="chips">
+            <label class="chip"><input type="checkbox" name="segmentoVendas" value="Varejo"> Varejo</label>
+            <label class="chip"><input type="checkbox" name="segmentoVendas" value="Distribuidor"> Distribuidor</label>
+            <label class="chip"><input type="checkbox" name="segmentoVendas" value="Atacado"> Atacado</label>
+            <label class="chip"><input type="checkbox" name="segmentoVendas" value="KACC"> KACC</label>
+            <label class="chip"><input type="checkbox" name="segmentoVendas" value="Cash & Care"> Cash & Care</label>
+            <label class="chip"><input type="checkbox" name="segmentoVendas" value="Canais Especiais"> Canais Especiais</label>
+          </div>
+        </section>
+
+        <!-- 🏪 Redes -->
+        <section class="section">
+          <h2>🏪 Redes</h2>
+          <p class="section-sub">Selecione o tipo de rede que sua empresa representa</p>
+          <div class="chips">
+            <label class="chip"><input type="checkbox" name="redes" value="Varejo"> Varejo</label>
+            <label class="chip"><input type="checkbox" name="redes" value="Distribuidor"> Distribuidor</label>
+          </div>
+        </section>
+
+        <!-- 📎 Anexos gerais -->
+        <section class="section">
+          <h2>📎 Anexar Documentos</h2>
+          <p class="section-sub">Formatos aceitos: PDF, DOC, DOCX, PNG, JPG. Máx. 5MB por arquivo.</p>
+          <input type="file" name="anexos" multiple accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" />
+        </section>
+
+        <!-- 🧾 Dados Fiscais -->
+        <section class="section">
+          <h2>🧾 Dados Fiscais</h2>
+          <div class="grid g2">
+            <fieldset class="fieldset">
+              <legend>Regime Tributário *</legend>
+              <label class="radio"><input type="radio" name="regimeTributario" value="Lucro Real" required> Lucro Real</label>
+              <label class="radio"><input type="radio" name="regimeTributario" value="Lucro Presumido" required> Lucro Presumido</label>
+              <label class="radio"><input type="radio" name="regimeTributario" value="SIMPLES" required> SIMPLES</label>
+              <label class="radio"><input type="radio" name="regimeTributario" value="Não Contribuinte ICMS" required> Não Contribuinte ICMS</label>
+            </fieldset>
+            <fieldset class="fieldset">
+              <legend>Cliente possui Regime Especial? *</legend>
+              <label class="radio"><input type="radio" name="regimeEspecial" value="Sim" required> Sim</label>
+              <label class="radio"><input type="radio" name="regimeEspecial" value="Não" required> Não</label>
+            </fieldset>
+          </div>
+        </section>
+
+        <div class="actions">
+          <button class="btn" type="submit">ENVIAR CADASTRO</button>
+          <span id="status" class="muted"></span>
+        </div>
+      </form>
+
+      <div id="ok" class="hidden ok">
+        <h3>✅ Cadastro Enviado com Sucesso!</h3>
+        <p>Seus dados foram enviados para análise. Em breve entraremos em contato.</p>
+        <p><strong>Protocolo:</strong> <span id="protocolo"></span></p>
+        <button class="btn" onclick="window.location.reload()">Realizar Novo Cadastro</button>
       </div>
 
-      <label>O endereço de cobrança é o mesmo do principal?*
-        <select id="enderecoCobrancaIgual" name="cobranca_igual" required>
-          <option value="">Selecione</option>
-          <option value="sim">Sim</option>
-          <option value="nao">Não</option>
-        </select>
-      </label>
-      <div id="secaoCobranca" class="condicional">
-        <h2>Endereço de Cobrança</h2>
-        <label>CEP<input type="text" name="cep_cobranca"></label>
-        <label>Rua<input type="text" name="rua_cobranca"></label>
-        <label>Número<input type="text" name="numero_cobranca"></label>
-        <label>Bairro<input type="text" name="bairro_cobranca"></label>
-        <label>Cidade<input type="text" name="cidade_cobranca"></label>
-        <label>Estado<input type="text" name="estado_cobranca"></label>
-      </div>
-    </section>
-
-    <!-- Dados Bancários -->
-    <section>
-      <h2>Dados Bancários</h2>
-      <label>Banco<select name="banco" id="bancoSelect"></select></label>
-      <label>Agência<input type="text" name="agencia"></label>
-      <label>Conta<input type="text" name="conta"></label>
-    </section>
-
-    <!-- Uploads -->
-    <section>
-      <h2>Documentos</h2>
-      <label>Contrato Social<input type="file" name="contrato_social"></label>
-      <label>Comprovante de Endereço<input type="file" name="comprovante_endereco"></label>
-    </section>
-
-    <button type="submit">Enviar</button>
-  </form>
+    </main>
+  </div>
 
   <script>
-    // Máscaras
-    function mascaraCNPJ(v) {
-      v = v.replace(/\D/g, "");
-      v = v.replace(/^(\d{2})(\d)/, "$1.$2");
-      v = v.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
-      v = v.replace(/\.(\d{3})(\d)/, ".$1/$2");
-      v = v.replace(/(\d{4})(\d)/, "$1-$2");
-      return v;
-    }
-    function mascaraTelefone(v) {
-      v = v.replace(/\D/g, "");
-      v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
-      v = v.replace(/(\d{4,5})(\d{4})$/, "$1-$2");
-      return v;
-    }
-    function mascaraCEP(v) {
-      v = v.replace(/\D/g, "");
-      v = v.replace(/^(\d{5})(\d)/, "$1-$2");
-      return v;
-    }
+    // ===== Helpers
+    const onlyDigits = s => (s||'').replace(/\D+/g,'');
+    const maskCNPJ = v => {
+      const d = onlyDigits(v).slice(0,14);
+      return d
+        .replace(/(\d{2})(\d)/,'$1.$2')
+        .replace(/(\d{2})\.(\d{3})(\d)/,'$1.$2.$3')
+        .replace(/(\d{2})\.(\d{3})\.(\d{3})(\d)/,'$1.$2.$3/$4')
+        .replace(/(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d{1,2})$/,'$1.$2.$3/$4-$5');
+    };
+    const maskPhone = v => {
+      const d = onlyDigits(v).slice(0,11);
+      return d.length <= 10
+        ? d.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3')
+        : d.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    };
+    const maskCEP = v => onlyDigits(v).slice(0,8).replace(/(\d{5})(\d{0,3})/, '$1-$2');
 
-    document.querySelector('input[name="cnpj"]').addEventListener('input', e => e.target.value = mascaraCNPJ(e.target.value));
-    document.querySelector('input[name="telefone"]').addEventListener('input', e => e.target.value = mascaraTelefone(e.target.value));
-    document.getElementById('cep').addEventListener('input', e => e.target.value = mascaraCEP(e.target.value));
+    const bindMask = (id, fn) => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', e => e.target.value = fn(e.target.value));
+    };
 
-    // ViaCEP
-    document.getElementById('cep').addEventListener('blur', function() {
-      let cep = this.value.replace(/\D/g, '');
-      if (cep.length === 8) {
-        fetch(`https://viacep.com.br/ws/${cep}/json/`)
-          .then(res => res.json())
-          .then(data => {
-            if (!data.erro) {
-              document.getElementById('rua').value = data.logradouro;
-              document.getElementById('bairro').value = data.bairro;
-              document.getElementById('cidade').value = data.localidade;
-              document.getElementById('estado').value = data.uf;
-            }
-          });
+    // Masks
+    bindMask('cnpj', maskCNPJ);
+    ['telPrincipal','telComercial','telFinanceiro'].forEach(id=>{
+      const el = document.getElementById(id); if(!el) return;
+      el.addEventListener('input', e => e.target.value = maskPhone(e.target.value));
+    });
+    ['cepPrincipal','cepEntrega','cepCobranca'].forEach(id=>{
+      const el = document.getElementById(id); if(!el) return;
+      el.addEventListener('input', e => e.target.value = maskCEP(e.target.value));
+    });
+
+    // CEP -> ViaCEP
+    async function viaCEP(cep){
+      const c = onlyDigits(cep);
+      if (c.length !== 8) return null;
+      try{
+        const r = await fetch(`https://viacep.com.br/ws/${c}/json/`);
+        const j = await r.json();
+        if (j.erro) return null;
+        return { rua:j.logradouro||'', bairro:j.bairro||'', cidade:j.localidade||'', uf:j.uf||'' };
+      }catch{ return null; }
+    }
+    async function fillByCEP(prefix){
+      const cep = document.getElementById(`cep${prefix}`).value;
+      const data = await viaCEP(cep);
+      if (!data) return;
+      document.getElementById(`rua${prefix}`).value = data.rua;
+      document.getElementById(`bairro${prefix}`).value = data.bairro;
+      document.getElementById(`cidade${prefix}`).value = data.cidade;
+      document.getElementById(`uf${prefix}`).value = data.uf;
+    }
+    ['Principal','Entrega','Cobranca'].forEach(p=>{
+      const el = document.getElementById(`cep${p}`);
+      if (el) el.addEventListener('blur', ()=> fillByCEP(p));
+    });
+
+    // Condicional (entrega/cobrança)
+    const secEntrega = document.getElementById('secEntrega');
+    const secCobranca = document.getElementById('secCobranca');
+    function toggleSection(name, show){
+      const node = name==='entrega' ? secEntrega : secCobranca;
+      node.classList.toggle('hidden', !show);
+      const req = (on, ids)=> ids.forEach(id=>{ const el=document.getElementById(id); if(el) el.required = on; });
+      if (name==='entrega') req(show, ['cepEntrega','ruaEntrega','numeroEntrega','bairroEntrega','cidadeEntrega','ufEntrega']);
+      else req(show, ['cepCobranca','ruaCobranca','numeroCobranca','bairroCobranca','cidadeCobranca','ufCobranca']);
+    }
+    document.querySelectorAll('input[name="entregaIgual"]').forEach(r=>r.addEventListener('change', e=>toggleSection('entrega', e.target.value==='nao')));
+    document.querySelectorAll('input[name="cobrancaIgual"]').forEach(r=>r.addEventListener('change', e=>toggleSection('cobranca', e.target.value==='nao')));
+    toggleSection('entrega', false);
+    toggleSection('cobranca', false);
+
+    // Lista de bancos (BrasilAPI + fallback)
+    (async function loadBanks(){
+      const sel = document.getElementById('banco');
+      try{
+        const r = await fetch('https://brasilapi.com.br/api/banks/v1');
+        const list = (await r.json()).sort((a,b)=>a.fullName.localeCompare(b.fullName));
+        sel.innerHTML = '<option value="">Selecione...</option>' + list.map(b=>`<option>${b.code} - ${b.fullName}</option>`).join('');
+      }catch{
+        const fallback = ['001 - Banco do Brasil','033 - Santander','104 - Caixa Econômica Federal','237 - Bradesco','341 - Itaú','077 - Inter','260 - Nubank','290 - PagBank','336 - C6 Bank','323 - Mercado Pago','212 - Original'];
+        sel.innerHTML = '<option value="">Selecione...</option>' + fallback.map(x=>`<option>${x}</option>`).join('');
+      }
+    })();
+
+    // Anexos obrigatórios > 20k
+    const limiteEl = document.querySelector('input[name="limiteCredito"]');
+    const anexosBox = document.getElementById('anexosObrigatorios');
+    function checkAnexos(){
+      const v = Number(limiteEl.value||0);
+      anexosBox.classList.toggle('hidden', !(v>20000));
+      // marca required quando visível
+      anexosBox.querySelectorAll('input[type="file"]').forEach(el=> el.required = v>20000);
+    }
+    limiteEl.addEventListener('input', checkAnexos);
+
+    // Submissão
+    const form = document.getElementById('form');
+    const statusEl = document.getElementById('status');
+    const ok = document.getElementById('ok');
+    const protocoloEl = document.getElementById('protocolo');
+
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      statusEl.textContent = 'Enviando...';
+      const fd = new FormData(form);
+      try{
+        const resp = await fetch('/submit', { method:'POST', body: fd });
+        const json = await resp.json();
+        if (!json.ok) throw new Error();
+        form.classList.add('hidden');
+        ok.classList.remove('hidden');
+        protocoloEl.textContent = json.protocol || '—';
+        statusEl.textContent = '';
+      }catch{
+        statusEl.textContent = 'Falha ao enviar. Tente novamente.';
       }
     });
-
-    // Condicionais
-    document.getElementById('enderecoEntregaIgual').addEventListener('change', function() {
-      document.getElementById('secaoEntrega').style.display = this.value === 'nao' ? 'block' : 'none';
-    });
-    document.getElementById('enderecoCobrancaIgual').addEventListener('change', function() {
-      document.getElementById('secaoCobranca').style.display = this.value === 'nao' ? 'block' : 'none';
-    });
-
-    // Lista de Bancos
-    fetch("https://brasilapi.com.br/api/banks/v1")
-      .then(res => res.json())
-      .then(bancos => {
-        let select = document.getElementById('bancoSelect');
-        bancos.forEach(b => {
-          let opt = document.createElement('option');
-          opt.value = b.code;
-          opt.textContent = `${b.code} - ${b.fullName}`;
-          select.appendChild(opt);
-        });
-      });
   </script>
 </body>
 </html>
